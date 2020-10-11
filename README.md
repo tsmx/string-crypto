@@ -13,7 +13,7 @@
 ### Key passed via environment variable
 
 ```js
-const sc = require('../string-crypto');
+const sc = require('@tsmx/string-crypto');
 
 let mySecret = 'My secret string';
 
@@ -28,7 +28,7 @@ let decrypted = sc.decrypt(encrypted);
 ### Key passed directly via options
 
 ```js
-const sc = require('../string-crypto');
+const sc = require('@tsmx/string-crypto');
 
 let mySecret = 'My secret string';
 
