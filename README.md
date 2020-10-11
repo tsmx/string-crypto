@@ -18,7 +18,7 @@ const sc = require('@tsmx/string-crypto');
 let mySecret = 'My secret string';
 
 let encrypted = sc.encrypt(mySecret);
-// '28bedae6f6497f68abe403fb88df340e|2071d6458475b8a9313062b434b8feebf67d97d067b510b64133b511ccec313c'
+// '28bedae6f6497f68abe403fb88df340e|2071d6458...'
 
 let decrypted = sc.decrypt(encrypted); 
 // 'My secret string'
@@ -33,7 +33,7 @@ const sc = require('@tsmx/string-crypto');
 let mySecret = 'My secret string';
 
 var encrypted = sc.encrypt(mySecret, { key: '0123456789qwertzuiopasdfghjklyxc' });
-// 'ba7bbb57674a198ad6cb7ff65801f9c9|a49cff4c966387f00b0f327fc864fa233b551c62f570f80c63d405c6e3161b3d'
+// 'ba7bbb57674a198ad6cb7ff65801f9c9|a49cff4c9...'
 
 var decrypted = sc.decrypt(encrypted, { key: '0123456789qwertzuiopasdfghjklyxc' }); 
 // 'My secret string'
@@ -56,7 +56,7 @@ The string that should be encrypted.
 Type: `Object`
 Default: `null`
 
-Object containing the supported options for encryption.
+Object containing the supported options for encryption. Please also refer to the [notes](#notes).
 
 ```js
 options = {
@@ -79,7 +79,7 @@ The string that should be decrypted. Must be in the form that `encrypt` puts out
 Type: `Object`
 Default: `null`
 
-Object containing the supported options for decryption.
+Object containing the supported options for decryption. Please also refer to the [notes](#notes).
 
 ```js
 options = {
