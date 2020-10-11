@@ -96,4 +96,4 @@ Simple helper package to encrypt and decrypt string based on standard NodeJS Cry
     - a string of 32 characters length, or
     - a hexadecimal value of 64 characters length (= 32 bytes)
 - If no key is directly passed via `options.key` it is retrieved from the environment variable `ENCRYPTION_KEY`.
-- Result: string containing the intialization vector and the encrypted value separated by `'|'`
+- Result: string containing the initialization vector and the encrypted value separated by `'|'`
