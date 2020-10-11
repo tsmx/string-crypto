@@ -32,10 +32,10 @@ const sc = require('@tsmx/string-crypto');
 
 let mySecret = 'My secret string';
 
-var encrypted = sc.encrypt(mySecret, { key: '0123456789qwertzuiopasdfghjklyxc' });
+let encrypted = sc.encrypt(mySecret, { key: '0123456789qwertzuiopasdfghjklyxc' });
 // 'ba7bbb57674a198ad6cb7ff65801f9c9|a49cff4c9...'
 
-var decrypted = sc.decrypt(encrypted, { key: '0123456789qwertzuiopasdfghjklyxc' }); 
+let decrypted = sc.decrypt(encrypted, { key: '0123456789qwertzuiopasdfghjklyxc' }); 
 // 'My secret string'
 ```
 
