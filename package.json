@@ -1,0 +1,30 @@
+{
+  "name": "@tsmx/string-crypto",
+  "version": "1.0.0",
+  "description": "Encrypt and decrypt strings.",
+  "main": "string-crypto-helper.js",
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
+  },
+  "scripts": {
+    "test": "jest",
+    "test-coverage": "jest --coverage",
+    "coveralls": "jest --coverage && coveralls < coverage/lcov.info"
+  },
+  "author": "tsmx <dev@tsmx.net>",
+  "license": "MIT",
+  "keywords": [
+    "encryption",
+    "decryption",
+    "string",
+    "AES",
+    "cipheriv",
+    "NodeJS",
+    "crypto"
+  ],
+  "devDependencies": {
+    "coveralls": "^3.1.0",
+    "jest": "^26.5.2"
+  }
+}
