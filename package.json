@@ -7,6 +7,10 @@
     "node": ">=10.0.0",
     "npm": ">=6.0.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tsmx/string-crypto.git"
+  },
   "scripts": {
     "test": "jest",
     "test-coverage": "jest --coverage",
