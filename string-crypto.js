@@ -23,6 +23,14 @@ function retrieveKey(options) {
 };
 
 module.exports.encrypt = function (text, options = null) {
+    if(text === null) {
+        if(options && options.passNull) {
+            return null;
+        }
+        else {
+            throw new Error('Encryption string must not be null. To pass through null values set options.passNull to true.');
+        }
+    }
     let key = retrieveKey(options);
     let iv = crypto.randomBytes(16);
     let cipher = crypto.createCipheriv(algorithm, key, iv);
@@ -32,6 +40,14 @@ module.exports.encrypt = function (text, options = null) {
 };
 
 module.exports.decrypt = function (text, options = null) {
+    if(text === null) {
+        if(options && options.passNull) {
+            return null;
+        }
+        else {
+            throw new Error('Decryption string must not be null. To pass through null values set options.passNull to true.');
+        }
+    }
     let key = retrieveKey(options);
     let decrypted = null;
     try {

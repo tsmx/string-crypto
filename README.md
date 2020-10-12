@@ -1,4 +1,4 @@
-# [**string-crypto**](https://github.com/tsmx/string-crypto)
+# [**@tsmx/string-crypto**](https://github.com/tsmx/string-crypto)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 ![npm (scoped)](https://img.shields.io/npm/v/@tsmx/string-crypto)
@@ -60,8 +60,28 @@ Object containing the supported options for encryption. Please also refer to the
 
 ```js
 options = {
-    key: 'YOUR KEY HERE'
+    key: 'YOUR KEY HERE',
+    passNull: false
 };
+```
+
+##### options.key
+
+Type: `String`
+Default: `null`
+
+The key used for encryption. If not present, the key is retrieved from the environment variable `ENCRYPTION_KEY`.
+
+##### options.passNull
+
+Type: `Boolean`
+Default: `false`
+
+Sometimes it is helpful to let a value of `null` pass the encryption though `null` can't be encrypted either. If set to `true` the decrypt function will return `null` if value is `null`. Defaults to `false`, then an exception is thrown if the passed value is `null`.
+
+```js
+sc.encrypt(null); // throwing Error
+sc.encrypt(null,  { passNull: true }); // null
 ```
 
 ### decrypt(value, options = null)
@@ -83,8 +103,28 @@ Object containing the supported options for decryption. Please also refer to the
 
 ```js
 options = {
-    key: 'YOUR KEY HERE'
+    key: 'YOUR KEY HERE',
+    passNull: false
 };
+```
+
+##### options.key
+
+Type: `String`
+Default: `null`
+
+The key used for decryption. If not present, the key is retrieved from the environment variable `ENCRYPTION_KEY`.
+
+##### options.passNull
+
+Type: `Boolean`
+Default: `false`
+
+Sometimes it is helpful to let a value of `null` pass the decryption though `null` can't be decrypted either. If set to `true` the decrypt function will return `null` if value is `null`. Defaults to `false`, then an exception is thrown if the passed value is `null`.
+
+```js
+sc.decrypt(null); // throwing Error
+sc.decrypt(null,  { passNull: true }); // null
 ```
 
 ## Notes

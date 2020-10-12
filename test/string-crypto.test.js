@@ -100,4 +100,57 @@ describe('secure-config test suite', () => {
         done();
     });
 
+    it('tests a failed encryption of null', async (done) => {
+        process.env['ENCRYPTION_KEY'] = testKeyChar;
+        const sc = require('../string-crypto');
+        expect(() => { sc.encrypt(null); }).toThrow('must not be null');
+        done();
+    });
+
+    it('tests a failed encryption of null with options.passNull set to false', async (done) => {
+        process.env['ENCRYPTION_KEY'] = testKeyChar;
+        const sc = require('../string-crypto');
+        expect(() => { sc.encrypt(null, { passNull: false }); }).toThrow('must not be null');
+        done();
+    });
+
+    it('tests a successful encryption passthrough of null with options.passNull set to true', async (done) => {
+        process.env['ENCRYPTION_KEY'] = testKeyChar;
+        const sc = require('../string-crypto');
+        expect(sc.encrypt(null, { passNull: true })).toStrictEqual(null);
+        done();
+    });
+
+    it('tests a failed decryption of null', async (done) => {
+        process.env['ENCRYPTION_KEY'] = testKeyChar;
+        const sc = require('../string-crypto');
+        expect(() => { sc.decrypt(null); }).toThrow('must not be null');
+        done();
+    });
+
+    it('tests a failed decryption of null with options.passNull set to false', async (done) => {
+        process.env['ENCRYPTION_KEY'] = testKeyChar;
+        const sc = require('../string-crypto');
+        expect(() => { sc.decrypt(null, { passNull: false }); }).toThrow('must not be null');
+        done();
+    });
+
+    it('tests a successful decryption passthrough of null with options.passNull set to true', async (done) => {
+        process.env['ENCRYPTION_KEY'] = testKeyChar;
+        const sc = require('../string-crypto');
+        expect(sc.decrypt(null, { passNull: true })).toStrictEqual(null);
+        done();
+    });
+
+    it('tests a successful encryption and decryption passthrough of null', async (done) => {
+        process.env['ENCRYPTION_KEY'] = testKeyChar;
+        const sc = require('../string-crypto');
+        const test = null;
+        const encrypted = sc.encrypt(test, { passNull: true });
+        const decrypted = sc.decrypt(encrypted, { passNull: true });
+        expect(encrypted).toStrictEqual(null);
+        expect(decrypted).toStrictEqual(null);
+        done();
+    });
+
 });
