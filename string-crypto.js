@@ -20,7 +20,7 @@ function retrieveKey(options) {
         throw new Error('Key length length must be 32 bytes.');
     }
     return result;
-};
+}
 
 module.exports.encrypt = function (text, options = null) {
     if(text === null) {
