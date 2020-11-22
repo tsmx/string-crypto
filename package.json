@@ -13,8 +13,7 @@
   },
   "scripts": {
     "test": "jest",
-    "test-coverage": "jest --coverage",
-    "coveralls": "jest --coverage && coveralls < coverage/lcov.info"
+    "test-coverage": "jest --coverage"
   },
   "author": "tsmx <dev@tsmx.net>",
   "license": "MIT",
@@ -28,7 +27,6 @@
     "crypto"
   ],
   "devDependencies": {
-    "coveralls": "^3.1.0",
     "jest": "^26.5.2"
   }
 }
