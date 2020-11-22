@@ -23,8 +23,8 @@ function retrieveKey(options) {
 }
 
 module.exports.encrypt = function (text, options = null) {
-    if(text === null) {
-        if(options && options.passNull) {
+    if (text === null) {
+        if (options && options.passNull) {
             return null;
         }
         else {
@@ -40,8 +40,8 @@ module.exports.encrypt = function (text, options = null) {
 };
 
 module.exports.decrypt = function (text, options = null) {
-    if(text === null) {
-        if(options && options.passNull) {
+    if (text === null) {
+        if (options && options.passNull) {
             return null;
         }
         else {
