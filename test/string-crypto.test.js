@@ -14,7 +14,7 @@ describe('secure-config test suite', () => {
         delete process.env['ENCRYPTION_KEY'];
     });
 
-    it('tests a successful encryption and decryption with char key from environment var', async (done) => {
+    it('tests a successful encryption and decryption with char key from environment var', async () => {
         process.env['ENCRYPTION_KEY'] = testKeyChar;
         const sc = require('../string-crypto');
         const encrypted = sc.encrypt(testString);
@@ -24,10 +24,9 @@ describe('secure-config test suite', () => {
         expect(hexReg.test(encryptedParts[1])).toBeTruthy();
         const decrypted = sc.decrypt(encrypted);
         expect(decrypted).toStrictEqual(testString);
-        done();
     });
 
-    it('tests a successful encryption and decryption with hex key from environment var', async (done) => {
+    it('tests a successful encryption and decryption with hex key from environment var', async () => {
         process.env['ENCRYPTION_KEY'] = testKeyHex;
         const sc = require('../string-crypto');
         const encrypted = sc.encrypt(testString);
@@ -37,10 +36,9 @@ describe('secure-config test suite', () => {
         expect(hexReg.test(encryptedParts[1])).toBeTruthy();
         const decrypted = sc.decrypt(encrypted);
         expect(decrypted).toStrictEqual(testString);
-        done();
     });
 
-    it('tests a successful encryption and decryption with char key from options', async (done) => {
+    it('tests a successful encryption and decryption with char key from options', async () => {
         const options = {
             key: testKeyChar
         }
@@ -52,10 +50,9 @@ describe('secure-config test suite', () => {
         expect(hexReg.test(encryptedParts[1])).toBeTruthy();
         const decrypted = sc.decrypt(encrypted, options);
         expect(decrypted).toStrictEqual(testString);
-        done();
     });
 
-    it('tests a successful encryption and decryption with hex key from options', async (done) => {
+    it('tests a successful encryption and decryption with hex key from options', async () => {
         const options = {
             key: testKeyHex
         }
@@ -67,29 +64,25 @@ describe('secure-config test suite', () => {
         expect(hexReg.test(encryptedParts[1])).toBeTruthy();
         const decrypted = sc.decrypt(encrypted, options);
         expect(decrypted).toStrictEqual(testString);
-        done();
     });
 
-    it('tests a failed encryption because of missing key', async (done) => {
+    it('tests a failed encryption because of missing key', async () => {
         const sc = require('../string-crypto');
         expect(() => { sc.encrypt(testString); }).toThrow('Key not found.');
-        done();
     });
 
-    it('tests a failed encryption because of wrong key length from environment var', async (done) => {
+    it('tests a failed encryption because of wrong key length from environment var', async () => {
         const sc = require('../string-crypto');
         process.env['ENCRYPTION_KEY'] = testKeyCharWrongLength;
         expect(() => { sc.encrypt(testString); }).toThrow('Key length');
-        done();
     });
 
-    it('tests a failed encryption because of wrong key length from options', async (done) => {
+    it('tests a failed encryption because of wrong key length from options', async () => {
         const sc = require('../string-crypto');
         expect(() => { sc.encrypt(testString, { key: testKeyCharWrongLength }); }).toThrow('Key length');
-        done();
     });
 
-    it('tests a failed decryption because of a wrong key', async (done) => {
+    it('tests a failed decryption because of a wrong key', async () => {
         const sc = require('../string-crypto');
         const encrypted = sc.encrypt(testString, { key: testKeyChar });
         const encryptedParts = encrypted.split('|');
@@ -97,52 +90,45 @@ describe('secure-config test suite', () => {
         expect(hexReg.test(encryptedParts[0])).toBeTruthy();
         expect(hexReg.test(encryptedParts[1])).toBeTruthy();
         expect(() => { sc.decrypt(encrypted, { key: testKeyCharBad }); }).toThrow('Decryption failed.');
-        done();
     });
 
-    it('tests a failed encryption of null', async (done) => {
+    it('tests a failed encryption of null', async () => {
         process.env['ENCRYPTION_KEY'] = testKeyChar;
         const sc = require('../string-crypto');
         expect(() => { sc.encrypt(null); }).toThrow('must not be null');
-        done();
     });
 
-    it('tests a failed encryption of null with options.passNull set to false', async (done) => {
+    it('tests a failed encryption of null with options.passNull set to false', async () => {
         process.env['ENCRYPTION_KEY'] = testKeyChar;
         const sc = require('../string-crypto');
         expect(() => { sc.encrypt(null, { passNull: false }); }).toThrow('must not be null');
-        done();
     });
 
-    it('tests a successful encryption passthrough of null with options.passNull set to true', async (done) => {
+    it('tests a successful encryption passthrough of null with options.passNull set to true', async () => {
         process.env['ENCRYPTION_KEY'] = testKeyChar;
         const sc = require('../string-crypto');
         expect(sc.encrypt(null, { passNull: true })).toStrictEqual(null);
-        done();
     });
 
-    it('tests a failed decryption of null', async (done) => {
+    it('tests a failed decryption of null', async () => {
         process.env['ENCRYPTION_KEY'] = testKeyChar;
         const sc = require('../string-crypto');
         expect(() => { sc.decrypt(null); }).toThrow('must not be null');
-        done();
     });
 
-    it('tests a failed decryption of null with options.passNull set to false', async (done) => {
+    it('tests a failed decryption of null with options.passNull set to false', async () => {
         process.env['ENCRYPTION_KEY'] = testKeyChar;
         const sc = require('../string-crypto');
         expect(() => { sc.decrypt(null, { passNull: false }); }).toThrow('must not be null');
-        done();
     });
 
-    it('tests a successful decryption passthrough of null with options.passNull set to true', async (done) => {
+    it('tests a successful decryption passthrough of null with options.passNull set to true', async () => {
         process.env['ENCRYPTION_KEY'] = testKeyChar;
         const sc = require('../string-crypto');
         expect(sc.decrypt(null, { passNull: true })).toStrictEqual(null);
-        done();
     });
 
-    it('tests a successful encryption and decryption passthrough of null', async (done) => {
+    it('tests a successful encryption and decryption passthrough of null', async () => {
         process.env['ENCRYPTION_KEY'] = testKeyChar;
         const sc = require('../string-crypto');
         const test = null;
@@ -150,7 +136,6 @@ describe('secure-config test suite', () => {
         const decrypted = sc.decrypt(encrypted, { passNull: true });
         expect(encrypted).toStrictEqual(null);
         expect(decrypted).toStrictEqual(null);
-        done();
     });
 
 });

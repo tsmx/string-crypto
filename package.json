@@ -27,6 +27,6 @@
     "crypto"
   ],
   "devDependencies": {
-    "jest": "^26.5.2"
+    "jest": "^27.2.0"
   }
 }
