@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 ![npm (scoped)](https://img.shields.io/npm/v/@tsmx/string-crypto)
 ![node-current (scoped)](https://img.shields.io/node/v/@tsmx/string-crypto)
-[![Build Status](https://img.shields.io/github/workflow/status/tsmx/string-crypto/git-ci-build)](https://img.shields.io/github/workflow/status/tsmx/string-crypto/git-ci-build)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/tsmx/string-crypto/git-build.yml?branch=master)](https://img.shields.io/github/actions/workflow/status/tsmx/string-crypto/git-build.yml?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/tsmx/string-crypto/badge.svg?branch=master)](https://coveralls.io/github/tsmx/string-crypto?branch=master)
 
 > Encrypt and decrypt strings.
