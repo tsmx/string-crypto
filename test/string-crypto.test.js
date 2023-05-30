@@ -41,7 +41,7 @@ describe('secure-config test suite', () => {
     it('tests a successful encryption and decryption with char key from options', async () => {
         const options = {
             key: testKeyChar
-        }
+        };
         const sc = require('../string-crypto');
         const encrypted = sc.encrypt(testString, options);
         const encryptedParts = encrypted.split('|');
@@ -55,7 +55,7 @@ describe('secure-config test suite', () => {
     it('tests a successful encryption and decryption with hex key from options', async () => {
         const options = {
             key: testKeyHex
-        }
+        };
         const sc = require('../string-crypto');
         const encrypted = sc.encrypt(testString, options);
         const encryptedParts = encrypted.split('|');
