@@ -1,6 +1,6 @@
 {
   "name": "@tsmx/string-crypto",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Encrypt and decrypt strings.",
   "main": "string-crypto.js",
   "engines": {
