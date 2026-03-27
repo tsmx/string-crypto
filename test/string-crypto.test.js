@@ -1,6 +1,6 @@
 const { expect } = require('@jest/globals');
 
-describe('secure-config test suite', () => {
+describe('string-crypto test suite', () => {
 
     const testString = 'Test123$ üöä';
     const hexReg = new RegExp('^[0-9A-F]*$', 'i');
