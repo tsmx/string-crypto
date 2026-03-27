@@ -138,4 +138,75 @@ describe('secure-config test suite', () => {
         expect(decrypted).toStrictEqual(null);
     });
 
+    it('tests a successful GCM encryption and decryption with char key from environment var', async () => {
+        process.env['ENCRYPTION_KEY'] = testKeyChar;
+        const sc = require('../string-crypto');
+        const encrypted = sc.encrypt(testString, { algorithm: 'aes-256-gcm' });
+        const encryptedParts = encrypted.split('|');
+        expect(encryptedParts.length).toBe(3);
+        expect(hexReg.test(encryptedParts[0])).toBeTruthy();
+        expect(hexReg.test(encryptedParts[1])).toBeTruthy();
+        expect(hexReg.test(encryptedParts[2])).toBeTruthy();
+        const decrypted = sc.decrypt(encrypted);
+        expect(decrypted).toStrictEqual(testString);
+    });
+
+    it('tests a successful GCM encryption and decryption with hex key from environment var', async () => {
+        process.env['ENCRYPTION_KEY'] = testKeyHex;
+        const sc = require('../string-crypto');
+        const encrypted = sc.encrypt(testString, { algorithm: 'aes-256-gcm' });
+        const encryptedParts = encrypted.split('|');
+        expect(encryptedParts.length).toBe(3);
+        expect(hexReg.test(encryptedParts[0])).toBeTruthy();
+        expect(hexReg.test(encryptedParts[1])).toBeTruthy();
+        expect(hexReg.test(encryptedParts[2])).toBeTruthy();
+        const decrypted = sc.decrypt(encrypted);
+        expect(decrypted).toStrictEqual(testString);
+    });
+
+    it('tests a successful GCM encryption and decryption with char key from options', async () => {
+        const options = { key: testKeyChar, algorithm: 'aes-256-gcm' };
+        const sc = require('../string-crypto');
+        const encrypted = sc.encrypt(testString, options);
+        const encryptedParts = encrypted.split('|');
+        expect(encryptedParts.length).toBe(3);
+        expect(hexReg.test(encryptedParts[0])).toBeTruthy();
+        expect(hexReg.test(encryptedParts[1])).toBeTruthy();
+        expect(hexReg.test(encryptedParts[2])).toBeTruthy();
+        const decrypted = sc.decrypt(encrypted, { key: testKeyChar });
+        expect(decrypted).toStrictEqual(testString);
+    });
+
+    it('tests a successful GCM encryption and decryption with hex key from options', async () => {
+        const options = { key: testKeyHex, algorithm: 'aes-256-gcm' };
+        const sc = require('../string-crypto');
+        const encrypted = sc.encrypt(testString, options);
+        const encryptedParts = encrypted.split('|');
+        expect(encryptedParts.length).toBe(3);
+        expect(hexReg.test(encryptedParts[0])).toBeTruthy();
+        expect(hexReg.test(encryptedParts[1])).toBeTruthy();
+        expect(hexReg.test(encryptedParts[2])).toBeTruthy();
+        const decrypted = sc.decrypt(encrypted, { key: testKeyHex });
+        expect(decrypted).toStrictEqual(testString);
+    });
+
+    it('tests that GCM auth tag tampering causes decryption failure', async () => {
+        const sc = require('../string-crypto');
+        const encrypted = sc.encrypt(testString, { key: testKeyChar, algorithm: 'aes-256-gcm' });
+        const parts = encrypted.split('|');
+        const tampered = parts[0] + '|' + parts[1] + '|' + 'ff'.repeat(16);
+        expect(() => { sc.decrypt(tampered, { key: testKeyChar }); }).toThrow('Decryption failed.');
+    });
+
+    it('tests a failed GCM encryption because of unknown algorithm', async () => {
+        const sc = require('../string-crypto');
+        expect(() => { sc.encrypt(testString, { key: testKeyChar, algorithm: 'aes-256-ecb' }); }).toThrow('Unknown algorithm');
+    });
+
+    it('tests a successful GCM encryption passthrough of null with options.passNull set to true', async () => {
+        process.env['ENCRYPTION_KEY'] = testKeyChar;
+        const sc = require('../string-crypto');
+        expect(sc.encrypt(null, { passNull: true, algorithm: 'aes-256-gcm' })).toStrictEqual(null);
+    });
+
 });
