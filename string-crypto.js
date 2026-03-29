@@ -6,7 +6,7 @@ const defaultKeyEnvVar = 'ENCRYPTION_KEY';
 
 function retrieveAlgorithm(options) {
     if (!options || !options.algorithm) {
-        return algorithmAes;
+        return algorithmGcm;
     }
     if (options.algorithm === algorithmAes || options.algorithm === algorithmGcm) {
         return options.algorithm;

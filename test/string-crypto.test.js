@@ -17,7 +17,7 @@ describe('string-crypto test suite', () => {
     it('tests a successful CBC encryption and decryption with char key from environment var', async () => {
         process.env['ENCRYPTION_KEY'] = testKeyChar;
         const sc = require('../string-crypto');
-        const encrypted = sc.encrypt(testString);
+        const encrypted = sc.encrypt(testString, { algorithm: 'aes-256-cbc' });
         const encryptedParts = encrypted.split('|');
         expect(encryptedParts.length).toBe(2);
         expect(hexReg.test(encryptedParts[0])).toBeTruthy();
@@ -29,7 +29,7 @@ describe('string-crypto test suite', () => {
     it('tests a successful CBC encryption and decryption with hex key from environment var', async () => {
         process.env['ENCRYPTION_KEY'] = testKeyHex;
         const sc = require('../string-crypto');
-        const encrypted = sc.encrypt(testString);
+        const encrypted = sc.encrypt(testString, { algorithm: 'aes-256-cbc' });
         const encryptedParts = encrypted.split('|');
         expect(encryptedParts.length).toBe(2);
         expect(hexReg.test(encryptedParts[0])).toBeTruthy();
@@ -52,7 +52,8 @@ describe('string-crypto test suite', () => {
 
     it('tests a successful CBC encryption and decryption with char key from options', async () => {
         const options = {
-            key: testKeyChar
+            key: testKeyChar,
+            algorithm: 'aes-256-cbc'
         };
         const sc = require('../string-crypto');
         const encrypted = sc.encrypt(testString, options);
@@ -66,7 +67,8 @@ describe('string-crypto test suite', () => {
 
     it('tests a successful CBC encryption and decryption with hex key from options', async () => {
         const options = {
-            key: testKeyHex
+            key: testKeyHex,
+            algorithm: 'aes-256-cbc'
         };
         const sc = require('../string-crypto');
         const encrypted = sc.encrypt(testString, options);
@@ -80,23 +82,23 @@ describe('string-crypto test suite', () => {
 
     it('tests a failed CBC encryption because of missing key', async () => {
         const sc = require('../string-crypto');
-        expect(() => { sc.encrypt(testString); }).toThrow('Key not found.');
+        expect(() => { sc.encrypt(testString, { algorithm: 'aes-256-cbc' }); }).toThrow('Key not found.');
     });
 
     it('tests a failed CBC encryption because of wrong key length from environment var', async () => {
         const sc = require('../string-crypto');
         process.env['ENCRYPTION_KEY'] = testKeyCharWrongLength;
-        expect(() => { sc.encrypt(testString); }).toThrow('Key length');
+        expect(() => { sc.encrypt(testString, { algorithm: 'aes-256-cbc' }); }).toThrow('Key length');
     });
 
     it('tests a failed CBC encryption because of wrong key length from options', async () => {
         const sc = require('../string-crypto');
-        expect(() => { sc.encrypt(testString, { key: testKeyCharWrongLength }); }).toThrow('Key length');
+        expect(() => { sc.encrypt(testString, { key: testKeyCharWrongLength, algorithm: 'aes-256-cbc' }); }).toThrow('Key length');
     });
 
     it('tests a failed CBC decryption because of a wrong key', async () => {
         const sc = require('../string-crypto');
-        const encrypted = sc.encrypt(testString, { key: testKeyChar });
+        const encrypted = sc.encrypt(testString, { key: testKeyChar, algorithm: 'aes-256-cbc' });
         const encryptedParts = encrypted.split('|');
         expect(encryptedParts.length).toBe(2);
         expect(hexReg.test(encryptedParts[0])).toBeTruthy();
@@ -107,45 +109,45 @@ describe('string-crypto test suite', () => {
     it('tests a failed CBC encryption of null', async () => {
         process.env['ENCRYPTION_KEY'] = testKeyChar;
         const sc = require('../string-crypto');
-        expect(() => { sc.encrypt(null); }).toThrow('must not be null');
+        expect(() => { sc.encrypt(null, { algorithm: 'aes-256-cbc' }); }).toThrow('must not be null');
     });
 
     it('tests a failed CBC ncryption of null with options.passNull set to false', async () => {
         process.env['ENCRYPTION_KEY'] = testKeyChar;
         const sc = require('../string-crypto');
-        expect(() => { sc.encrypt(null, { passNull: false }); }).toThrow('must not be null');
+        expect(() => { sc.encrypt(null, { passNull: false, algorithm: 'aes-256-cbc' }); }).toThrow('must not be null');
     });
 
     it('tests a successful CBC encryption passthrough of null with options.passNull set to true', async () => {
         process.env['ENCRYPTION_KEY'] = testKeyChar;
         const sc = require('../string-crypto');
-        expect(sc.encrypt(null, { passNull: true })).toStrictEqual(null);
+        expect(sc.encrypt(null, { passNull: true, algorithm: 'aes-256-cbc' })).toStrictEqual(null);
     });
 
     it('tests a failed CBC decryption of null', async () => {
         process.env['ENCRYPTION_KEY'] = testKeyChar;
         const sc = require('../string-crypto');
-        expect(() => { sc.decrypt(null); }).toThrow('must not be null');
+        expect(() => { sc.decrypt(null, { algorithm: 'aes-256-cbc' }); }).toThrow('must not be null');
     });
 
     it('tests a failed CBC decryption of null with options.passNull set to false', async () => {
         process.env['ENCRYPTION_KEY'] = testKeyChar;
         const sc = require('../string-crypto');
-        expect(() => { sc.decrypt(null, { passNull: false }); }).toThrow('must not be null');
+        expect(() => { sc.decrypt(null, { passNull: false, algorithm: 'aes-256-cbc' }); }).toThrow('must not be null');
     });
 
     it('tests a successful CBC decryption passthrough of null with options.passNull set to true', async () => {
         process.env['ENCRYPTION_KEY'] = testKeyChar;
         const sc = require('../string-crypto');
-        expect(sc.decrypt(null, { passNull: true })).toStrictEqual(null);
+        expect(sc.decrypt(null, { passNull: true, algorithm: 'aes-256-cbc' })).toStrictEqual(null);
     });
 
     it('tests a successful CBC encryption and decryption passthrough of null', async () => {
         process.env['ENCRYPTION_KEY'] = testKeyChar;
         const sc = require('../string-crypto');
         const test = null;
-        const encrypted = sc.encrypt(test, { passNull: true });
-        const decrypted = sc.decrypt(encrypted, { passNull: true });
+        const encrypted = sc.encrypt(test, { passNull: true, algorithm: 'aes-256-cbc' });
+        const decrypted = sc.decrypt(encrypted, { passNull: true, algorithm: 'aes-256-cbc' });
         expect(encrypted).toStrictEqual(null);
         expect(decrypted).toStrictEqual(null);
     });
@@ -225,6 +227,19 @@ describe('string-crypto test suite', () => {
         process.env['ENCRYPTION_KEY'] = testKeyChar;
         const sc = require('../string-crypto');
         expect(() => { sc.encrypt(null, { algorithm: 'aes-256-gcm' }); }).toThrow('must not be null');
+    });
+
+    it('tests a successful GCM encryption and decryption without explicit algorithm specification', async () => {
+        process.env['ENCRYPTION_KEY'] = testKeyHex;
+        const sc = require('../string-crypto');
+        const encrypted = sc.encrypt(testString);
+        const encryptedParts = encrypted.split('|');
+        expect(encryptedParts.length).toBe(3);
+        expect(hexReg.test(encryptedParts[0])).toBeTruthy();
+        expect(hexReg.test(encryptedParts[1])).toBeTruthy();
+        expect(hexReg.test(encryptedParts[2])).toBeTruthy();
+        const decrypted = sc.decrypt(encrypted);
+        expect(decrypted).toStrictEqual(testString);
     });
 
 });
