@@ -6,7 +6,11 @@
 [![Build Status](https://img.shields.io/github/actions/workflow/status/tsmx/string-crypto/git-build.yml?branch=master)](https://img.shields.io/github/actions/workflow/status/tsmx/string-crypto/git-build.yml?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/tsmx/string-crypto/badge.svg?branch=master)](https://coveralls.io/github/tsmx/string-crypto?branch=master)
 
-> Encrypt and decrypt strings.
+> Easily encrypt and decrypt strings with AES-256-GCM or AES-256-CBC.
+
+Encryption is done with `AES-256-GCM` by default including authentication tag for tamper-safety. You can also use `AES-256-CBC` by specifying it on the options. Decryption automatically detects the encryption algorithm and decrypts accordingly.
+
+**Note:** `AES-256-CBC` does only provide encryption without any data integrity check. Add a MAC/integrity-check yourself if needed.
 
 ## Usage
 
@@ -130,10 +134,12 @@ sc.decrypt(null,  { passNull: true }); // null
 ## Notes
 
 Simple helper package to encrypt and decrypt string based on standard NodeJS Crypto functions.
-- Used cipher: AES-256-CBC with initialization vector (`crypto.createCipheriv`)
+- Used cipher: AES-256-GCM or AES-256-CBC with initialization vector (`crypto.createCipheriv`)
 - IV generation with `crypto.randomBytes`
 - Key length must be 32 bytes. The key can be provided as
     - a string of 32 characters length, or
     - a hexadecimal value of 64 characters length (= 32 bytes)
 - If no key is directly passed via `options.key` it is retrieved from the environment variable `ENCRYPTION_KEY`.
-- Result: string containing the initialization vector and the encrypted value separated by `'|'`
+- Encryption result: string containing algorithm output separated by `'|'`:
+  - For AES-256-GCM: `IV|cipherText|authTag`
+  - For AES-256-CBC: `IV|cipherText`
