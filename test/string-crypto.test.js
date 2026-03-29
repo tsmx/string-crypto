@@ -110,7 +110,7 @@ describe('string-crypto test suite', () => {
         expect(() => { sc.encrypt(null); }).toThrow('must not be null');
     });
 
-    it('tests a failed eCBC ncryption of null with options.passNull set to false', async () => {
+    it('tests a failed CBC ncryption of null with options.passNull set to false', async () => {
         process.env['ENCRYPTION_KEY'] = testKeyChar;
         const sc = require('../string-crypto');
         expect(() => { sc.encrypt(null, { passNull: false }); }).toThrow('must not be null');
@@ -219,6 +219,12 @@ describe('string-crypto test suite', () => {
         process.env['ENCRYPTION_KEY'] = testKeyChar;
         const sc = require('../string-crypto');
         expect(sc.encrypt(null, { passNull: true, algorithm: 'aes-256-gcm' })).toStrictEqual(null);
+    });
+
+    it('tests a failed GCM ncryption of null with options.passNull set to false', async () => {
+        process.env['ENCRYPTION_KEY'] = testKeyChar;
+        const sc = require('../string-crypto');
+        expect(() => { sc.encrypt(null, { algorithm: 'aes-256-gcm' }); }).toThrow('must not be null');
     });
 
 });

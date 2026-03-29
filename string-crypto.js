@@ -4,7 +4,7 @@ const algorithmGcm = 'aes-256-gcm';
 const delimiter = '|';
 const defaultKeyEnvVar = 'ENCRYPTION_KEY';
 
-function resolveAlgorithm(options) {
+function retrieveAlgorithm(options) {
     if (!options || !options.algorithm) {
         return algorithmAes;
     }
@@ -43,7 +43,7 @@ module.exports.encrypt = function (text, options = null) {
         }
     }
     let key = retrieveKey(options);
-    let algo = resolveAlgorithm(options);
+    let algo = retrieveAlgorithm(options);
     let iv, cipher, encrypted, authTag;
     switch (algo) {
         case algorithmGcm:
