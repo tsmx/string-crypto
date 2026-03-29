@@ -8,7 +8,7 @@
 
 > Easily encrypt and decrypt strings with AES-256-GCM or AES-256-CBC.
 
-Encryption is done with `AES-256-GCM` by default including authentication tag for tamper-safety. You can also use `AES-256-CBC` by specifying it on the options. Decryption automatically detects the encryption algorithm and decrypts accordingly.
+Encryption is done with `AES-256-GCM` by default including authentication tag for tamper-safety. You can also use `AES-256-CBC` for backward compatibility by specifying it on the [options](#optionsalgorithm). Decryption automatically detects the encryption algorithm and decrypts accordingly.
 
 **Note:** `AES-256-CBC` does only provide encryption without any data integrity check. Add a MAC/integrity-check yourself if needed.
 
@@ -65,6 +65,7 @@ Object containing the supported options for encryption. Please also refer to the
 ```js
 options = {
     key: 'YOUR KEY HERE',
+    algorithm: 'aes-256-gcm',
     passNull: false
 };
 ```
@@ -75,6 +76,18 @@ Type: `String`
 Default: `null`
 
 The key used for encryption. If not present, the key is retrieved from the environment variable `ENCRYPTION_KEY`.
+
+##### options.algorithm
+
+Type: `String`
+Default: `'aes-256-gcm'`
+
+The encryption algorithm to use. Supported values are `'aes-256-gcm'` (default) and `'aes-256-cbc'`. Use `'aes-256-cbc'` only for backward compatibility.
+
+```js
+sc.encrypt(mySecret); // uses AES-256-GCM by default
+sc.encrypt(mySecret, { algorithm: 'aes-256-cbc' }); // use AES-256-CBC explicitly
+```
 
 ##### options.passNull
 
