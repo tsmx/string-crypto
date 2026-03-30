@@ -1,11 +1,11 @@
 {
   "name": "@tsmx/string-crypto",
   "version": "1.0.7",
-  "description": "Encrypt and decrypt strings.",
+  "description": "Encrypt and decrypt strings with AES-256-GCM or AES-256-CBC.",
   "main": "string-crypto.js",
   "engines": {
-    "node": ">=10.0.0",
-    "npm": ">=6.0.0"
+    "node": ">=16.9.0",
+    "npm": ">=7.0.0"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,12 @@
     "decryption",
     "string",
     "AES",
+    "CBC",
+    "GCM",
+    "AES-GCM",
+    "AES-CBC",
+    "AES-256-GCM",
+    "AES-256-CBC",
     "cipheriv",
     "NodeJS",
     "crypto"
