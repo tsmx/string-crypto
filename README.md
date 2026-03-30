@@ -10,7 +10,7 @@
 
 Encryption is done with `AES-256-GCM` by default including authentication tag for tamper-safety.
 
-You can also use `AES-256-CBC` for [backward compatibility](#upgrading-from-previous-versions) by specifying it on the [options](#optionsalgorithm). Decryption automatically detects the encryption algorithm and decrypts accordingly.
+You can also use `AES-256-CBC` for [backward compatibility](#upgrading-from-previous-versions-prior-to-200) by specifying it on the [encryption options](#optionsalgorithm). Decryption automatically detects the encryption algorithm and decrypts accordingly.
 
 **Note:** `AES-256-CBC` does only provide encryption without any data integrity check. Add a MAC/integrity-check yourself if needed.
 
