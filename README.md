@@ -8,7 +8,9 @@
 
 > Easily encrypt and decrypt strings.
 
-Encryption is done with `AES-256-GCM` by default including authentication tag for tamper-safety. You can also use `AES-256-CBC` for backward compatibility by specifying it on the [options](#optionsalgorithm). Decryption automatically detects the encryption algorithm and decrypts accordingly.
+Encryption is done with `AES-256-GCM` by default including authentication tag for tamper-safety.
+
+You can also use `AES-256-CBC` for [backward compatibility](#upgrading-from-previous-versions) by specifying it on the [options](#optionsalgorithm). Decryption automatically detects the encryption algorithm and decrypts accordingly.
 
 **Note:** `AES-256-CBC` does only provide encryption without any data integrity check. Add a MAC/integrity-check yourself if needed.
 
@@ -156,3 +158,17 @@ Simple helper package to encrypt and decrypt strings based on standard NodeJS Cr
 - Encryption result: string containing algorithm output separated by `'|'`:
   - For AES-256-GCM: `IV|cipherText|authTag`
   - For AES-256-CBC: `IV|cipherText`
+
+## Upgrading from previous versions prior to 2.0.0
+
+If you are upgrading from a version prior to 2.0.0 where only `AES-256-CBC` was available, note that the default encryption algorithm is now `AES-256-GCM`. To retain backwards compatibility, set the algorithm explicitly on every `encrypt` call:
+
+```js
+// Before 2.0.0 (implicit CBC)
+sc.encrypt(mySecret);
+
+// From 2.0.0 on (explicit CBC for backwards compatibility)
+sc.encrypt(mySecret, { algorithm: 'aes-256-cbc' });
+```
+
+Decryption requires no changes — it automatically detects the algorithm from the encrypted string.
