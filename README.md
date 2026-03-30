@@ -6,7 +6,7 @@
 [![Build Status](https://img.shields.io/github/actions/workflow/status/tsmx/string-crypto/git-build.yml?branch=master)](https://img.shields.io/github/actions/workflow/status/tsmx/string-crypto/git-build.yml?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/tsmx/string-crypto/badge.svg?branch=master)](https://coveralls.io/github/tsmx/string-crypto?branch=master)
 
-> Easily encrypt and decrypt strings with AES-256-GCM or AES-256-CBC.
+> Easily encrypt and decrypt strings.
 
 Encryption is done with `AES-256-GCM` by default including authentication tag for tamper-safety. You can also use `AES-256-CBC` for backward compatibility by specifying it on the [options](#optionsalgorithm). Decryption automatically detects the encryption algorithm and decrypts accordingly.
 
@@ -94,7 +94,7 @@ sc.encrypt(mySecret, { algorithm: 'aes-256-cbc' }); // use AES-256-CBC explicitl
 Type: `Boolean`
 Default: `false`
 
-Sometimes it is helpful to let a value of `null` pass the encryption though `null` can't be encrypted either. If set to `true` the decrypt function will return `null` if value is `null`. Defaults to `false`, then an exception is thrown if the passed value is `null`.
+Sometimes it is helpful to let a value of `null` pass the encryption though `null` can't be encrypted either. If set to `true` the encrypt function will return `null` if value is `null`. Defaults to `false`, then an exception is thrown if the passed value is `null`.
 
 ```js
 sc.encrypt(null); // throwing Error
@@ -146,7 +146,7 @@ sc.decrypt(null,  { passNull: true }); // null
 
 ## Notes
 
-Simple helper package to encrypt and decrypt string based on standard NodeJS Crypto functions.
+Simple helper package to encrypt and decrypt strings based on standard NodeJS Crypto functions.
 - Used cipher: AES-256-GCM or AES-256-CBC with initialization vector (`crypto.createCipheriv`)
 - IV generation with `crypto.randomBytes`
 - Key length must be 32 bytes. The key can be provided as
