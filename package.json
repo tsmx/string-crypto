@@ -1,6 +1,6 @@
 {
   "name": "@tsmx/string-crypto",
-  "version": "1.0.7",
+  "version": "2.0.0",
   "description": "Encrypt and decrypt strings with AES-256-GCM or AES-256-CBC.",
   "main": "string-crypto.js",
   "engines": {
