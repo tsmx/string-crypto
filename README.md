@@ -148,16 +148,36 @@ sc.decrypt(null,  { passNull: true }); // null
 
 ## Notes
 
-Simple helper package to encrypt and decrypt strings based on standard NodeJS Crypto functions.
-- Used cipher: AES-256-GCM or AES-256-CBC with initialization vector (`crypto.createCipheriv`)
-- IV generation with `crypto.randomBytes`
-- Key length must be 32 bytes. The key can be provided as
-    - a string of 32 characters length, or
-    - a hexadecimal value of 64 characters length (= 32 bytes)
-- If no key is directly passed via `options.key` it is retrieved from the environment variable `ENCRYPTION_KEY`.
-- Encryption result: string containing algorithm output separated by `'|'`:
-  - For AES-256-GCM: `IV|cipherText|authTag`
-  - For AES-256-CBC: `IV|cipherText`
+Simple helper package to encrypt and decrypt strings using standard Node.js Crypto functions.
+
+### Algorithm & IV
+
+| Property | Detail |
+|---|---|
+| Supported ciphers | `AES-256-GCM` (default), `AES-256-CBC` |
+| IV generation | `crypto.randomBytes` via `crypto.createCipheriv` |
+
+### Key
+
+- Must be **32 bytes** in one of two formats:
+  - Plain string — exactly 32 characters
+  - Hex string — exactly 64 characters (= 32 bytes)
+- If `options.key` is not set, the key is read from the `ENCRYPTION_KEY` environment variable.
+
+### Encrypted output format
+
+A `|`-delimited string:
+
+| Algorithm | Format |
+|---|---|
+| AES-256-GCM | `IV\|cipherText\|authTag` |
+| AES-256-CBC | `IV\|cipherText` |
+
+| Term | Description |
+|---|---|
+| `IV` | Initialization vector — a random value ensuring each encryption is unique |
+| `cipherText` | The encrypted payload |
+| `authTag` | Authentication tag (GCM only) — verifies the ciphertext has not been tampered with |
 
 ## Upgrading from previous versions prior to 2.0.0
 
